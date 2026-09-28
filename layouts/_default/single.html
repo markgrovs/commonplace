@@ -1,11 +1,17 @@
 {{ define "main" }}
-<article class="h-entry">
+{{ $entry := in (slice "posts" "essays" "log") .Section }}
+<article{{ if $entry }} class="h-entry"{{ end }}>
     <header class="entry-header">
-        <h1 class="p-name">{{ .Title }}</h1>
-        {{ if and (not .Date.IsZero) (or (ne .Section "") (eq .Type "now")) }}<p class="meta">{{ if eq .Type "now" }}Updated {{ end }}<time class="dt-published" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time></p>{{ end }}
-        {{ with .Params.link }}<p class="meta">Linked article: <a href="{{ . }}">{{ . }}</a></p>{{ end }}
+        {{ if $entry }}
+        {{ $dateTitle := and (eq .Section "log") (eq .Title (.Date.Format "2006-01-02")) }}
+        <h1{{ if not $dateTitle }} class="p-name"{{ end }}>{{ .Title }}</h1>
+        {{ partial "entry-meta.html" . }}
+        {{ else }}
+        <h1>{{ .Title }}</h1>
+        {{ if eq .Type "now" }}<p class="meta">Updated <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time></p>{{ end }}
+        {{ end }}
     </header>
     <div class="e-content">{{ .Content }}</div>
-    {{ with .GetTerms "tags" }}<p class="meta tags">Topics: {{ range $i, $tag := . }}{{ if $i }}, {{ end }}<a href="{{ $tag.RelPermalink }}">{{ $tag.Title }}</a>{{ end }}</p>{{ end }}
+    {{ if $entry }}{{ with .GetTerms "tags" }}<p class="meta tags">Topics: {{ range $i, $tag := . }}{{ if $i }}, {{ end }}<a class="p-category" href="{{ $tag.RelPermalink }}">{{ $tag.Title }}</a>{{ end }}</p>{{ end }}{{ end }}
 </article>
 {{ end }}
