@@ -1,0 +1,8 @@
+{{ define "main" }}
+<section>
+    <h1>Archive</h1>
+    {{ with .Content }}<div class="intro">{{ . }}</div>{{ end }}
+    {{ $pages := where site.RegularPages "Section" "in" (slice "posts" "links") }}
+    {{ partial "entry-list.html" $pages }}
+</section>
+{{ end }}

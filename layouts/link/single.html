@@ -1,0 +1,9 @@
+{{ define "main" }}
+<article class="h-entry">
+    <header class="entry-header">
+        <h1 class="p-name"><a class="u-bookmark-of" href="{{ .Params.link }}">{{ .Title }}</a></h1>
+        <p class="meta"><time class="dt-published" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time> · <a class="u-url" href="{{ .RelPermalink }}">Permalink</a></p>
+    </header>
+    <div class="e-content">{{ .Content }}</div>
+</article>
+{{ end }}

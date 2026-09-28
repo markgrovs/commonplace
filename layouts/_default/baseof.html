@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="{{ site.Language.Lang }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>{{ block "title" . }}{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}{{ end }}</title>
+    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+    <link rel="canonical" href="{{ .Permalink }}">
+    <link rel="stylesheet" href="{{ "css/commonplace.css" | relURL }}">
+    <link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="any">
+    <link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
+    <link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ "index.xml" | absURL }}">
+    {{ if not .IsHome }}{{ with .OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" title="{{ $.Title }}" href="{{ .Permalink }}">{{ end }}{{ end }}
+    <link rel="authorization_endpoint" href="https://indieauth.com/auth">
+    <link rel="token_endpoint" href="https://tokens.indieauth.com/token">
+    <link rel="webmention" href="https://webmention.io/markgroves.us/webmention">
+    <link rel="pingback" href="https://webmention.io/markgroves.us/xmlrpc">
+    {{ with .Params.jsonld }}<script type="application/ld+json">{{ . | jsonify | safeJS }}</script>{{ end }}
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-wrap">
+        <header class="site-header h-card">
+            <a class="site-name p-name u-url u-uid" rel="me" href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
+            <nav aria-label="Main navigation">
+                <a href="{{ "log/" | relURL }}">Log</a>
+                <a href="{{ "essays/" | relURL }}">Essays</a>
+                <a href="{{ "now/" | relURL }}">Now</a>
+            </nav>
+        </header>
+        <main id="main">{{ block "main" . }}{{ end }}</main>
+        <footer class="site-footer">
+            <nav aria-label="Footer navigation">
+                <a href="{{ "index.xml" | relURL }}">RSS</a>
+                <a href="{{ "colophon/" | relURL }}">Colophon</a>
+                <a href="{{ "posts/" | relURL }}">Archive</a>
+                <a href="{{ "cv/" | relURL }}">CV</a>
+            </nav>
+            <p>© {{ now.Year }} {{ site.Params.author.name }}</p>
+        </footer>
+    </div>
+</body>
+</html>

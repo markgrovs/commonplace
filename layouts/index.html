@@ -1,0 +1,17 @@
+{{ define "main" }}
+<div class="home h-card">
+    <h1 class="visually-hidden p-name">{{ site.Title }}</h1>
+    <div class="welcome">{{ site.Params.welcome | markdownify }}</div>
+    <section aria-labelledby="recent-log">
+        <h2 id="recent-log">Log</h2>
+        {{ $entries := first 3 (where site.RegularPages "Section" "log") }}
+        {{ if $entries }}{{ partial "entry-list.html" $entries }}{{ else }}<p>No public log entries yet.</p>{{ end }}
+        <p class="more"><a href="{{ "log/" | relURL }}">All log entries</a></p>
+    </section>
+    <section aria-labelledby="recent-essays">
+        <h2 id="recent-essays">Essays</h2>
+        {{ $essays := where site.RegularPages "Section" "in" (slice "posts" "essays") }}
+        {{ partial "entry-list.html" (first 3 $essays) }}
+    </section>
+</div>
+{{ end }}

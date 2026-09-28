@@ -1,0 +1,7 @@
+name = "Commonplace"
+license = "MIT"
+description = "A quiet, independent Hugo theme for a personal commonplace book."
+min_version = "0.165.0"
+
+[author]
+  name = "Mark Groves"

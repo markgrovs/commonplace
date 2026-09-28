@@ -1,0 +1,13 @@
+{{- $url := urls.Parse .Destination -}}
+{{- $source := .Destination -}}
+{{- if and (not $url.Scheme) (not (strings.HasPrefix .Destination "//")) (not (strings.HasPrefix .Destination "/")) -}}
+    {{- with .Page.Resources.GetMatch .Destination -}}
+        {{- $source = .RelPermalink -}}
+    {{- else -}}
+        {{- $source = printf "/%s%s" $.Page.File.Dir $.Destination -}}
+    {{- end -}}
+{{- end -}}
+{{- if .Title -}}<figure>{{- end -}}
+<img src="{{ $source | safeURL }}" alt="{{ .PlainText }}" loading="lazy" decoding="async">
+{{- with .Title }}<figcaption>{{ . }}</figcaption>{{ end -}}
+{{- if .Title -}}</figure>{{- end -}}

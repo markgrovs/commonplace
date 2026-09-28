@@ -1,0 +1,7 @@
+{{ define "main" }}
+<section>
+    <h1>Log</h1>
+    {{ with .Content }}<div class="intro">{{ . }}</div>{{ end }}
+    {{ if .Pages }}{{ $paginator := .Paginate .Pages 10 }}{{ partial "entry-list.html" $paginator.Pages }}{{ partial "pagination.html" $paginator }}{{ else }}<p>No public log entries yet.</p>{{ end }}
+</section>
+{{ end }}

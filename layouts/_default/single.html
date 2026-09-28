@@ -1,0 +1,11 @@
+{{ define "main" }}
+<article class="h-entry">
+    <header class="entry-header">
+        <h1 class="p-name">{{ .Title }}</h1>
+        {{ if and (not .Date.IsZero) (or (ne .Section "") (eq .Type "now")) }}<p class="meta">{{ if eq .Type "now" }}Updated {{ end }}<time class="dt-published" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time></p>{{ end }}
+        {{ with .Params.link }}<p class="meta">Linked article: <a href="{{ . }}">{{ . }}</a></p>{{ end }}
+    </header>
+    <div class="e-content">{{ .Content }}</div>
+    {{ with .GetTerms "tags" }}<p class="meta tags">Topics: {{ range $i, $tag := . }}{{ if $i }}, {{ end }}<a href="{{ $tag.RelPermalink }}">{{ $tag.Title }}</a>{{ end }}</p>{{ end }}
+</article>
+{{ end }}

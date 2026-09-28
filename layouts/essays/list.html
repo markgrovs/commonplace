@@ -1,0 +1,13 @@
+{{ define "main" }}
+<section>
+    <h1>Essays</h1>
+    {{ with .Content }}<div class="intro">{{ . }}</div>{{ end }}
+    {{ $pages := where site.RegularPages "Section" "in" (slice "posts" "essays") }}
+    {{ if $pages }}
+        {{ range $pages.GroupByDate "2006" }}
+        <h2>{{ .Key }}</h2>
+        {{ partial "entry-list.html" .Pages }}
+        {{ end }}
+    {{ else }}<p>No essays yet.</p>{{ end }}
+</section>
+{{ end }}

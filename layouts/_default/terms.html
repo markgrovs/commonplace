@@ -1,0 +1,5 @@
+{{ define "main" }}
+<section><h1>{{ .Title }}</h1>
+    {{ if .Pages }}{{ $paginator := .Paginate .Pages.ByTitle }}<ul class="terms">{{ range $paginator.Pages }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a> <span class="meta">({{ len .Pages }})</span></li>{{ end }}</ul>{{ partial "pagination.html" $paginator }}{{ else }}<p>There is nothing here yet.</p>{{ end }}
+</section>
+{{ end }}
