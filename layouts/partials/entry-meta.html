@@ -1,7 +1,13 @@
 <p class="meta">
     <time class="dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "January 2, 2006" }}</time>
     <span aria-hidden="true"> · </span>
-    <span class="p-author h-card">by <a class="p-name u-url" href="{{ site.Home.Permalink }}">{{ site.Params.author.name }}</a></span>
+    <span class="p-author h-card">by <a class="p-name u-url" href="{{ site.Home.Permalink }}">{{ site.Params.author.full_name }}</a></span>
     <span aria-hidden="true"> · </span>
     <a class="u-url u-uid" href="{{ .Permalink }}">Permalink</a>
 </p>
+{{ with .GitInfo }}
+{{ $revision := . }}
+{{ with site.Params.gitUrl }}
+<p class="meta revision">Revision <a href="{{ printf "%s%s" . $revision.Hash }}" target="_blank" rel="noopener" aria-label="View commit {{ $revision.AbbreviatedHash }}">{{ $revision.AbbreviatedHash }}</a> @ <time datetime="{{ $revision.AuthorDate.Format "2006-01-02" }}">{{ dateFormat (site.Params.dateformNum | default "2006-01-02") $revision.AuthorDate.Local }}</time></p>
+{{ end }}
+{{ end }}

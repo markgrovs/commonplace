@@ -12,17 +12,17 @@
     <link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
     <link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ "index.xml" | absURL }}">
     {{ if not .IsHome }}{{ with .OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" title="{{ $.Title }}" href="{{ .Permalink }}">{{ end }}{{ end }}
-    <link rel="authorization_endpoint" href="https://indieauth.com/auth">
-    <link rel="token_endpoint" href="https://tokens.indieauth.com/token">
-    <link rel="webmention" href="https://webmention.io/markgroves.us/webmention">
-    <link rel="pingback" href="https://webmention.io/markgroves.us/xmlrpc">
+    {{ with site.Params.indieweb.authorization_endpoint }}<link rel="authorization_endpoint" href="{{ . }}">{{ end }}
+    {{ with site.Params.indieweb.token_endpoint }}<link rel="token_endpoint" href="{{ . }}">{{ end }}
+    {{ with site.Params.indieweb.webmention_endpoint }}<link rel="webmention" href="{{ . }}">{{ end }}
+    {{ with site.Params.indieweb.pingback_endpoint }}<link rel="pingback" href="{{ . }}">{{ end }}
     {{ with .Params.jsonld }}<script type="application/ld+json">{{ . | jsonify | safeJS }}</script>{{ end }}
 </head>
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <div class="site-wrap">
-        <header class="site-header h-card">
-            <a class="site-name p-name u-url u-uid" rel="me" href="{{ site.Home.Permalink }}">{{ site.Title }}</a>
+        <header class="site-header">
+            <a class="site-name" rel="me" href="{{ site.Home.Permalink }}">{{ site.Title }}</a>
             <nav aria-label="Main navigation">
                 <a href="{{ "logs/" | relURL }}">Logs</a>
                 <a href="{{ "essays/" | relURL }}">Essays</a>
@@ -30,14 +30,15 @@
             </nav>
         </header>
         <main id="main">{{ block "main" . }}{{ end }}</main>
-        <footer class="site-footer">
+        <footer class="site-footer h-card">
             <nav aria-label="Footer navigation">
                 <a href="{{ "index.xml" | relURL }}">RSS</a>
+                {{ range site.Params.social }}{{ if eq .name "email" }}<a class="u-email" href="{{ .url }}">Email {{ site.Params.author.first_name }}</a>{{ end }}{{ end }}
                 <a href="{{ "colophon/" | relURL }}">Colophon</a>
                 <a href="{{ "posts/" | relURL }}">Archive</a>
                 <a href="{{ "cv/" | relURL }}">CV</a>
             </nav>
-            <p>© {{ now.Year }} {{ site.Params.author.name }}</p>
+            <p>© {{ now.Year }} <a class="p-name u-url u-uid" href="{{ site.Home.Permalink }}">{{ site.Params.author.full_name }}</a></p>
         </footer>
     </div>
 </body>

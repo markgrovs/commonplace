@@ -55,6 +55,7 @@ p, ul, ol, blockquote, figure { margin: 0 0 1.35em; }
 .more { margin-top: 1rem; }
 .entry-header { margin-bottom: 2.5rem; }
 .entry-header h1 { margin-bottom: .3em; }
+.entry-header .meta { margin-bottom: .3rem; }
 .meta a { color: var(--link); }
 .e-content { overflow-wrap: anywhere; }
 .e-content img { display: block; width: auto; max-width: 100%; height: auto; margin: 2rem auto; }
