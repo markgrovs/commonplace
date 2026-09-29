@@ -1,6 +1,6 @@
 {{- $pages := slice -}}
 {{- if .IsHome -}}
-    {{- $pages = where site.RegularPages "Section" "in" (slice "posts" "links" "log" "essays") -}}
+    {{- $pages = where site.RegularPages "Section" "in" (slice "posts" "links" "logs" "essays") -}}
     {{- $pages = union $pages (where site.RegularPages "Type" "now") -}}
 {{- else if eq .Section "essays" -}}
     {{- $pages = where site.RegularPages "Section" "in" (slice "posts" "essays") -}}
