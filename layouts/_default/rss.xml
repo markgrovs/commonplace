@@ -25,6 +25,7 @@
         {{ $body := .Content }}
         {{ if eq .Type "link" }}{{ $body = printf "%s%s" (partial "link-source.html" .) $body }}{{ end }}
         {{ $body = $body | replaceRE `(?i)(src|href)="/([^"#]+)` (printf `${1}="%s${2}` site.BaseURL) }}
+        {{ $body = printf "%s<p>Thanks for reading and keeping RSS alive. <a href=\"%s\">Visit my site for more.</a></p>" $body (site.Home.Permalink | htmlEscape) }}
         <description>{{ $body }}</description>
     </item>
     {{ end }}
