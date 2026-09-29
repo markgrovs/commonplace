@@ -1,18 +1,28 @@
 {{ define "main" }}
 {{ $entry := in (slice "posts" "essays" "logs") .Section }}
+{{ $log := eq .Section "logs" }}
 <article{{ if $entry }} class="h-entry"{{ end }}>
-    <header class="entry-header">
-        {{ if $entry }}
-        {{ $dateTitle := and (eq .Section "logs") (eq .Title (.Date.Format "2006-01-02")) }}
-        <h1{{ if not $dateTitle }} class="p-name"{{ end }}>{{ .Title }}</h1>
-        {{ partial "entry-meta.html" . }}
-        {{ partial "webmentions/response-line.html" . }}
-        {{ else }}
-        <h1>{{ .Title }}</h1>
-        {{ if eq .Type "now" }}<p class="meta">Updated <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time></p>{{ end }}
-        {{ end }}
-    </header>
+    {{ if not $log }}
+        <header class="entry-header">
+            {{ if $entry }}
+            <h1 class="p-name">{{ .Title }}</h1>
+            {{ partial "entry-meta.html" . }}
+            {{ partial "webmentions/response-line.html" . }}
+            {{ else }}
+            <h1>{{ .Title }}</h1>
+            {{ if eq .Type "now" }}<p class="meta">Updated <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time></p>{{ end }}
+            {{ end }}
+        </header>
+    {{ end }}
     <div class="e-content">{{ .Content }}</div>
+    {{ if $log }}
+        <div hidden>
+            <time class="dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}"></time>
+            <span class="p-author h-card"><a class="p-name u-url" href="{{ site.Home.Permalink }}">{{ site.Params.author.full_name }}</a></span>
+            <a class="u-url u-uid" href="{{ .Permalink }}">Permalink</a>
+        </div>
+        {{ partial "webmentions/response-line.html" . }}
+    {{ end }}
     {{ if $entry }}{{ with .GetTerms "tags" }}<p class="meta tags">Topics: {{ range $i, $tag := . }}{{ if $i }}, {{ end }}<a class="p-category" href="{{ $tag.RelPermalink }}">{{ $tag.Title }}</a>{{ end }}</p>{{ end }}{{ end }}
 </article>
 {{ end }}

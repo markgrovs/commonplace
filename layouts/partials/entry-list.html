@@ -1,7 +1,11 @@
 {{ with . }}
 <ol class="entry-list">
     {{ range . }}
-    <li><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ if eq .Section "logs" }}
+        <li class="log-entry"><a href="{{ .RelPermalink }}"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Monday, January 2, 2006" }}</time></a></li>
+        {{ else }}
+        <li><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ end }}
     {{ end }}
 </ol>
 {{ end }}

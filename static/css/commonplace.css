@@ -46,12 +46,15 @@ p, ul, ol, blockquote, figure { margin: 0 0 1.35em; }
 .welcome { font-size: 1.12em; margin: 0 0 3rem; }
 .welcome p { margin: 0; }
 .home h2 { border-bottom: 1px solid var(--line); padding-bottom: .4rem; }
+.home h2 a { color: inherit; text-decoration-color: var(--line); }
 .intro { color: var(--muted); margin-bottom: 2rem; }
 .entry-list { list-style: none; padding: 0; margin: 0 0 1.3rem; }
-.entry-list li { display: grid; grid-template-columns: 7.7rem minmax(0, 1fr); column-gap: .7rem; align-items: baseline; padding: .45rem 0; }
+.entry-list li { display: grid; grid-template-columns: 9rem minmax(0, 1fr); column-gap: .7rem; align-items: baseline; padding: .45rem 0; }
 .entry-list time, .meta, .more, .pagination, .terms { font: .78rem/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--muted); }
 .entry-list a { color: var(--ink); text-decoration-color: var(--line); }
 .entry-list a:hover { text-decoration-color: var(--ink); }
+.entry-list li.log-entry { display: block; padding: .65rem 0; }
+.entry-list .log-entry time { display: inline; margin: 0; font: inherit; color: inherit; }
 .more { margin-top: 1rem; }
 .entry-header { margin-bottom: 2.5rem; }
 .entry-header h1 { margin-bottom: .3em; }
