@@ -25,4 +25,5 @@
     {{ end }}
     {{ if $entry }}{{ with .GetTerms "tags" }}<p class="meta tags">Topics: {{ range $i, $tag := . }}{{ if $i }}, {{ end }}<a class="p-category" href="{{ $tag.RelPermalink }}">{{ $tag.Title }}</a>{{ end }}</p>{{ end }}{{ end }}
 </article>
+{{ if $entry }}{{ partial "entry-navigation.html" . }}{{ end }}
 {{ end }}

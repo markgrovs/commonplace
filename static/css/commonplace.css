@@ -79,6 +79,10 @@ code { font-size: .85em; }
 table { display: block; border-collapse: collapse; }
 th, td { padding: .3rem .6rem; border-bottom: 1px solid var(--line); text-align: left; }
 .pagination { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; }
+.entry-navigation { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; border-top: 1px solid var(--line); margin-top: 3rem; padding-top: 1.25rem; }
+.entry-navigation a { display: block; overflow-wrap: anywhere; }
+.entry-navigation .meta { display: block; margin-bottom: .4rem; }
+.entry-navigation .entry-next { grid-column: 2; text-align: right; }
 .site-footer { border-top: 1px solid var(--line); padding: 1rem 0 3rem; color: var(--muted); }
 .site-footer p { margin-top: 1rem; }
 @media (min-width: 640px) { body { font-size: 20px; } }
@@ -86,4 +90,6 @@ th, td { padding: .3rem .6rem; border-bottom: 1px solid var(--line); text-align:
     main { padding-top: 2rem; }
     .entry-list li { display: block; padding: .65rem 0; }
     .entry-list time { display: block; margin-bottom: .1rem; }
+    .entry-navigation { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+    .entry-navigation .entry-next { grid-column: 1; text-align: left; }
 }

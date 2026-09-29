@@ -1,0 +1,30 @@
+{{ $current := . }}
+{{ $pages := where site.RegularPages "Section" .Section }}
+{{ if in (slice "posts" "essays") .Section }}
+    {{ $pages = where site.RegularPages "Section" "in" (slice "posts" "essays") }}
+{{ end }}
+{{ $pages = $pages.ByDate }}
+{{ $previous := false }}
+{{ $next := false }}
+{{ range $index, $page := $pages }}
+    {{ if eq $page.RelPermalink $current.RelPermalink }}
+        {{ if gt $index 0 }}{{ $previous = index $pages (sub $index 1) }}{{ end }}
+        {{ if lt $index (sub (len $pages) 1) }}{{ $next = index $pages (add $index 1) }}{{ end }}
+    {{ end }}
+{{ end }}
+{{ if or $previous $next }}
+<nav class="entry-navigation" aria-label="Entry navigation">
+    {{ with $previous }}
+        <a class="entry-previous" href="{{ .RelPermalink }}" rel="prev">
+            <span class="meta">← Previous entry</span>
+            {{ if eq .Section "logs" }}{{ .Date.Format "Monday, January 2, 2006" }}{{ else }}{{ .Title }}{{ end }}
+        </a>
+    {{ end }}
+    {{ with $next }}
+        <a class="entry-next" href="{{ .RelPermalink }}" rel="next">
+            <span class="meta">Next entry →</span>
+            {{ if eq .Section "logs" }}{{ .Date.Format "Monday, January 2, 2006" }}{{ else }}{{ .Title }}{{ end }}
+        </a>
+    {{ end }}
+</nav>
+{{ end }}
