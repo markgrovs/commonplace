@@ -1,0 +1,11 @@
+{{ define "main" }}
+<section>
+    <h1>{{ .Title }}</h1>
+    {{ with .Content }}<div class="intro">{{ . }}</div>{{ end }}
+    {{ if .RegularPages }}
+        {{ $paginator := .Paginate .RegularPages.ByDate.Reverse 10 }}
+        {{ partial "entry-list.html" $paginator.Pages }}
+        {{ partial "pagination.html" $paginator }}
+    {{ else }}<p>No public link entries yet.</p>{{ end }}
+</section>
+{{ end }}

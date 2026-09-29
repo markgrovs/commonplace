@@ -6,4 +6,6 @@ Use Hugo Extended 0.165.0 or newer. Set `theme = "commonplace"` in the site's Hu
 
 The stylesheet follows the device's light or dark appearance setting. Site assets such as favicons live in the site repository.
 
+Link posts use `content/links/`, `type: link`, and the existing `link` field for the original source URL. Listings lead to the local entry; the entry and its RSS item show the source alongside the author's commentary. A source link already present in Markdown is used without adding a duplicate. The homepage shows up to three published links from the preceding 30 days, using their publication dates at build time; the Links archive and feeds retain older entries. Draft and future links are omitted from the homepage even in preview builds.
+
 The optional Reactions section reads Webmention.io JSON files from the site's `data/webmentions/` directory. It omits private and self-authored records, groups the rest by target page, and orders them by their received timestamp. Add a `content/reactions/_index.md` page to publish the index; writing with responses gets a short link below its entry metadata. Author names link to their profiles or source posts; avatar images are not displayed because stored image URLs may no longer work.

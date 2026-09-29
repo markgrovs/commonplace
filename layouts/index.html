@@ -13,5 +13,18 @@
         {{ $essays := where site.RegularPages "Section" "in" (slice "posts" "essays") }}
         {{ partial "entry-list.html" (first 3 $essays) }}
     </section>
+    {{ $buildTime := now }}
+    {{ $links := where site.RegularPages "Section" "links" }}
+    {{ $links = where $links "Draft" false }}
+    {{ $links = where $links "Date" "ge" ($buildTime.AddDate 0 0 -30) }}
+    {{ $links = where $links "Date" "le" $buildTime }}
+    {{ $links = where $links "PublishDate" "le" $buildTime }}
+    {{ if $links }}
+    <section aria-labelledby="recent-links">
+        <h2 id="recent-links"><a href="{{ "links/" | relURL }}">Recent links</a></h2>
+        {{ partial "entry-list.html" (first 3 $links.ByDate.Reverse) }}
+        <p class="more"><a href="{{ "links/" | relURL }}">All links</a></p>
+    </section>
+    {{ end }}
 </div>
 {{ end }}

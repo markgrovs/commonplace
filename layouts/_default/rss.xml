@@ -22,7 +22,9 @@
         <link>{{ .Permalink }}</link>
         <guid>{{ .Permalink }}</guid>
         <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
-        {{ $body := .Content | replaceRE `(?i)(src|href)="/([^"#]+)` (printf `${1}="%s${2}` site.BaseURL) }}
+        {{ $body := .Content }}
+        {{ if eq .Type "link" }}{{ $body = printf "%s%s" (partial "link-source.html" .) $body }}{{ end }}
+        {{ $body = $body | replaceRE `(?i)(src|href)="/([^"#]+)` (printf `${1}="%s${2}` site.BaseURL) }}
         <description>{{ $body }}</description>
     </item>
     {{ end }}

@@ -60,6 +60,8 @@ p, ul, ol, blockquote, figure { margin: 0 0 1.35em; }
 .entry-header h1 { margin-bottom: .3em; }
 .entry-header .meta { margin-bottom: .3rem; }
 .meta a { color: var(--link); }
+.link-source { overflow-wrap: anywhere; }
+.entry-header .link-source { margin-top: .6rem; }
 .entry-header .response-line { margin-top: .6rem; }
 .reaction-group { margin-top: 2.5rem; }
 .reaction-group h2 { margin-bottom: .8rem; }

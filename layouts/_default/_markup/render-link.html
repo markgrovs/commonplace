@@ -3,4 +3,4 @@
 {{- if and (not $url.Scheme) (not (strings.HasPrefix .Destination "//")) (strings.HasSuffix $url.Path ".md") -}}
     {{- $destination = relref .Page .Destination -}}
 {{- end -}}
-<a href="{{ $destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+<a href="{{ $destination | safeURL }}"{{ if and (eq .Page.Type "link") (eq $destination .Page.Params.link) }} class="u-bookmark-of"{{ end }}{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>

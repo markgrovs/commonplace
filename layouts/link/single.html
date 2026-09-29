@@ -1,9 +1,10 @@
 {{ define "main" }}
 <article class="h-entry">
     <header class="entry-header">
-        <h1 class="p-name"><a class="u-bookmark-of" href="{{ .Params.link }}">{{ .Title }}</a></h1>
+        <h1 class="p-name">{{ .Title }}</h1>
         {{ partial "entry-meta.html" . }}
         {{ partial "webmentions/response-line.html" . }}
+        {{ partial "link-source.html" . }}
     </header>
     <div class="e-content">{{ .Content }}</div>
     {{ with .GetTerms "tags" }}<p class="meta tags">Topics: {{ range $i, $tag := . }}{{ if $i }}, {{ end }}<a class="p-category" href="{{ $tag.RelPermalink }}">{{ $tag.Title }}</a>{{ end }}</p>{{ end }}

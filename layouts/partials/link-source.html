@@ -1,0 +1,7 @@
+{{- $content := .Content -}}
+{{- with .Params.link -}}
+    {{- $sourceHref := printf "href=\"%s\"" (. | htmlEscape) -}}
+    {{- if not (strings.Contains $content $sourceHref) -}}
+<p class="meta link-source">Original source: <a class="u-bookmark-of" href="{{ . }}">{{ . }}</a></p>
+    {{- end -}}
+{{- end -}}
