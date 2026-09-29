@@ -32,7 +32,7 @@
         <main id="main">{{ block "main" . }}{{ end }}</main>
         <footer class="site-footer h-card">
             <nav aria-label="Footer navigation">
-                <a href="{{ "index.xml" | relURL }}">RSS</a>
+                <a href="{{ "follow/" | relURL }}">Follow via RSS</a>
                 {{ range site.Params.social }}{{ if eq .name "email" }}<a class="u-email" href="{{ .url }}">Email {{ site.Params.author.first_name }}</a>{{ end }}{{ end }}
                 <a href="{{ "links/" | relURL }}">Links</a>
                 <a href="{{ "reactions/" | relURL }}">Reactions</a>

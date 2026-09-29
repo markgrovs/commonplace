@@ -70,6 +70,8 @@ p, ul, ol, blockquote, figure { margin: 0 0 1.35em; }
 .reaction-heading { display: flex; flex-wrap: wrap; align-items: center; gap: .15rem .65rem; font: .78rem/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--muted); }
 .reaction-content { margin: .6rem 0 0; white-space: pre-line; overflow-wrap: anywhere; }
 .e-content { overflow-wrap: anywhere; }
+.follow-reader { font-weight: 600; }
+.feed-address { overflow-wrap: anywhere; }
 .e-content img { display: block; width: auto; max-width: 100%; height: auto; margin: 2rem auto; }
 .e-content figure { margin: 2rem 0; }
 .e-content figure img { margin-bottom: .5rem; }
