@@ -1,0 +1,42 @@
+{{ define "main" }}
+{{ $mentions := partialCached "webmentions/entries.html" site }}
+<section class="reactions">
+    <h1>{{ .Title }}</h1>
+    {{ with .Content }}<div class="intro">{{ . }}</div>{{ end }}
+    {{ if $mentions }}
+        {{ $seen := slice }}
+        {{ range $mentions }}
+            {{ if not (in $seen .target) }}
+                {{ $seen = append .target $seen }}
+                {{ $group := where $mentions "target" .target }}
+                {{ $title := .target }}
+                {{ $permalink := .target }}
+                {{ with .page }}
+                    {{ $title = .Title }}
+                    {{ if .IsHome }}{{ $title = "Home" }}{{ end }}
+                    {{ $permalink = .Permalink }}
+                {{ end }}
+                <section class="reaction-group" id="{{ .target | anchorize }}" aria-labelledby="heading-{{ .target | anchorize }}">
+                    <h2 id="heading-{{ .target | anchorize }}"><a href="{{ $permalink }}">{{ $title }}</a></h2>
+                    <ol class="reaction-list">
+                        {{ range $group }}
+                            <li class="h-entry reaction">
+                                <div class="reaction-heading">
+                                    <span class="p-author h-card">
+                                        <a class="p-name u-url" href="{{ .authorURL }}">{{ .authorName }}</a>
+                                    </span>
+                                    <span class="reaction-type">{{ .type }}</span>
+                                    <a class="u-url" href="{{ .source }}"><time datetime="{{ .received }}">{{ time.Format "Jan 2, 2006" .received }}</time></a>
+                                </div>
+                                {{ with .content }}<p class="e-content reaction-content">{{ . }}</p>{{ end }}
+                            </li>
+                        {{ end }}
+                    </ol>
+                </section>
+            {{ end }}
+        {{ end }}
+    {{ else }}
+        <p>There are no public responses yet.</p>
+    {{ end }}
+</section>
+{{ end }}

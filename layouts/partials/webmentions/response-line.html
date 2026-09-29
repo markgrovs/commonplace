@@ -1,0 +1,15 @@
+{{ $mentions := partialCached "webmentions/entries.html" site }}
+{{ $responses := where $mentions "targetPath" (strings.TrimSuffix "/" .RelPermalink) }}
+{{ with $responses }}
+    {{ $anchor := (index $responses 0).target | anchorize }}
+    {{ $parts := slice }}
+    {{ range (slice "reply" "like" "repost" "mention") }}
+        {{ $count := len (where $responses "type" .) }}
+        {{ if $count }}
+            {{ $label := printf "%ss" . }}
+            {{ if eq $count 1 }}{{ $label = . }}{{ end }}
+            {{ $parts = append (printf "%d %s" $count $label) $parts }}
+        {{ end }}
+    {{ end }}
+    <p class="meta response-line"><a href="{{ "reactions/" | relURL }}#{{ $anchor }}">Responses: {{ delimit $parts ", " }}</a></p>
+{{ end }}

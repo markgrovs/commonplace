@@ -6,6 +6,7 @@
         {{ $dateTitle := and (eq .Section "logs") (eq .Title (.Date.Format "2006-01-02")) }}
         <h1{{ if not $dateTitle }} class="p-name"{{ end }}>{{ .Title }}</h1>
         {{ partial "entry-meta.html" . }}
+        {{ partial "webmentions/response-line.html" . }}
         {{ else }}
         <h1>{{ .Title }}</h1>
         {{ if eq .Type "now" }}<p class="meta">Updated <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time></p>{{ end }}

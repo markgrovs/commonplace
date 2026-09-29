@@ -1,0 +1,42 @@
+{{ $pages := dict "/" site.Home }}
+{{ range site.RegularPages }}
+    {{ $pages = merge $pages (dict (strings.TrimSuffix "/" .RelPermalink) .) }}
+{{ end }}
+{{ $mentions := slice }}
+{{ range hugo.Data.webmentions }}
+    {{ $post := .post }}
+    {{ $author := $post.author | default dict }}
+    {{ $source := $post.url | default .source }}
+    {{ $authorURL := $author.url | default $source }}
+    {{ $authorName := $author.name | default (replaceRE "^https?://([^/]+).*" "$1" $authorURL) }}
+    {{ $target := strings.TrimSuffix "/" (index $post "wm-target" | default .target) }}
+    {{ $targetOrigin := replaceRE "^(https?://[^/]+).*$" "$1" $target }}
+    {{ $authorIsOwner := or (eq (strings.ToLower $author.name) (strings.ToLower site.Params.author.full_name)) (eq (strings.TrimSuffix "/" $author.url) $targetOrigin) (strings.HasPrefix $source (printf "%s/" $targetOrigin)) }}
+    {{ if and (not (index $post "wm-private")) (not .private) (not $authorIsOwner) }}
+        {{ $targetPath := replaceRE "^https?://[^/]+" "" $target }}
+        {{ $targetPath = replaceRE "[?#].*$" "" $targetPath }}
+        {{ $targetPath = strings.TrimSuffix "/" $targetPath | default "/" }}
+        {{ $page := index $pages $targetPath }}
+        {{ $kind := "mention" }}
+        {{ $property := index $post "wm-property" }}
+        {{ if in (slice "in-reply-to" "reply-of") $property }}{{ $kind = "reply" }}{{ end }}
+        {{ if eq $property "like-of" }}{{ $kind = "like" }}{{ end }}
+        {{ if eq $property "repost-of" }}{{ $kind = "repost" }}{{ end }}
+        {{ $content := $post.content.text }}
+        {{ if not $content }}{{ $content = $post.content.html | plainify }}{{ end }}
+        {{ if not $content }}{{ $content = $post.summary.value }}{{ end }}
+        {{ $mentions = append (dict
+            "id" (index $post "wm-id")
+            "target" $target
+            "targetPath" $targetPath
+            "page" $page
+            "type" $kind
+            "authorName" $authorName
+            "authorURL" $authorURL
+            "source" $source
+            "content" $content
+            "received" (index $post "wm-received")
+        ) $mentions }}
+    {{ end }}
+{{ end }}
+{{ return (sort $mentions "received" "desc") }}

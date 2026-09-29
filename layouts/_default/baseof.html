@@ -34,6 +34,7 @@
             <nav aria-label="Footer navigation">
                 <a href="{{ "index.xml" | relURL }}">RSS</a>
                 {{ range site.Params.social }}{{ if eq .name "email" }}<a class="u-email" href="{{ .url }}">Email {{ site.Params.author.first_name }}</a>{{ end }}{{ end }}
+                <a href="{{ "reactions/" | relURL }}">Reactions</a>
                 <a href="{{ "colophon/" | relURL }}">Colophon</a>
                 <a href="{{ "posts/" | relURL }}">Archive</a>
                 <a href="{{ "cv/" | relURL }}">CV</a>
